@@ -3,13 +3,14 @@ const express = require('express');
 const root = express.Router({ mergeParams: true });
 
 const newUserRouter = require('./users/router');
-// const newLoginRouter = require('./users/routerL');
+// const newLoginRouter = require('./login/router');
 // const categoriesRouter = require('./categories/router');
 
 // root.use('/', recipesRouter);
 
 // root.use('/login', newLoginRouter);
 // root.use('/categories', categoriesRouter);
-root.use('/users', newUserRouter);
+root.use('/user', newUserRouter);
+// root.use('/login', newLoginRouter);
 
 module.exports = { root };

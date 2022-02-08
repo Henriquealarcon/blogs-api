@@ -1,5 +1,5 @@
 const { verifyToken } = require('../jwt/jwt');
-const { NewError } = require('../error/error');
+const { NewError } = require('../controllers/error/error');
 
 const authorization = (req, res, next) => {
     const token = req.headers.authorization;
