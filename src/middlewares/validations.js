@@ -27,31 +27,58 @@ const isEmailValid = (req, res, next) => {
 };
 
 const isPasswordValid = async (req, res, next) => {
-    const { password } = req.body;
-    const { email } = req.query;
+    const { password, email } = req.body;
     if (!password) {
         NewError(400, '"password" is required');
     }
     if (password.length !== 6) {
         NewError(400, '"password" length must be 6 characters long');
     }
-    const user = await User.findOne({ where: email });
+    const user = await User.findOne({ where: { email } });
+
     if (user) {
         return NewError(409, 'User already registered');
     }
     return next();
 };
 
-const tokenGenerator = async (req, res, next) => {
+const tokenGenerator = (req, res, next) => {
+    console.log(req.body, 'body');
     const { email, password } = req.body;
-       newTokenGenerator(email, password);
+       req.token = newTokenGenerator(email, password);
        return next();
    };
 
+   const emailLoginValidation = (req, res, next) => {
+    const { email } = req.body;
+    if (email === '') {
+        NewError(400, '"email" is not allowed to be empty');
+    }
+    if (!email) {
+        NewError(400, '"email" is required');
+    }
+
+    return next();
+};
+
+const passwordLoginValidation = (req, res, next) => {
+    const { password } = req.body;
+    if (password === '') {
+        NewError(400, '"password" is not allowed to be empty');
+    }
+    if (!password) {
+        NewError(400, '"password" is required');
+    }
+    console.log(req.body, 'pass');
+    return next();
+};
+console.log(!'');
 const loginValidation = async (req, _res, next) => {
     const { email, password } = req.body;
-    const token = await tokenGenerator(email, password);
-    req.token = token; 
+    const user = await User.findOne({ where: { email } });
+    if (!email || !password || !user) {
+        return NewError(400, 'Invalid fields');
+    }
     return next();
 };
 
@@ -61,4 +88,6 @@ module.exports = {
     isPasswordValid,
     tokenGenerator,
     loginValidation,
+    emailLoginValidation,
+    passwordLoginValidation,
 };
