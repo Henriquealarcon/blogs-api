@@ -6,9 +6,7 @@ const errorHandler = (error, _req, res, _next) => {
             message: error.message,
         });
     }
-    console.log('error');
-
-    console.log(error, 'alo');
+    console.log(error);
     return res.status(500).json({ message: 'internal server' });
 };
 

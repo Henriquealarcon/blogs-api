@@ -1,10 +1,11 @@
-// const { User } = require('../../../models');
+const { User } = require('../../../models');
 
-// const addUser = async (req, res, _next) => {
-//     const { displayName, email, password, image } = req.body;
-//     const newUser = await User.create({ displayName, email, password, image });
+const addUser = async (req, res, _next) => {
+    const { displayName, email, password, image } = req.body;
 
-//     return res.status(201).json(newUser);
-// };
+    const newUser = await User.create({ displayName, email, password, image });
 
-// module.exports = { addUser };
+    return res.status(201).json(newUser);
+};
+
+module.exports = { addUser };
