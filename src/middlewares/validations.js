@@ -108,6 +108,7 @@ const contentPostValidation = (req, res, next) => {
 
 const categoryIdPostValidation = (req, res, next) => {
     const { categoryId } = req.body;
+    console.log(categoryId, 'aqui');
     if (!categoryId) {
         return NewError(400, '"categoryId" is required');
     }
