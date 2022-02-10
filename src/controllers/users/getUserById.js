@@ -5,8 +5,7 @@ const { NewError } = ApiError;
 
 const getUserById = async (req, res, _next) => {
     const { id } = req.params;
-    const { email } = req.query;
-    const user = await User.findOne({ where: { id, email } });
+    const user = await User.findByPk(id);
 
     if (!user) {
         return NewError(404, 'User does not exist');

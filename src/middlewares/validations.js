@@ -45,7 +45,7 @@ const isPasswordValid = async (req, res, next) => {
 const tokenGenerator = (req, res, next) => {
     console.log(req.body, 'body');
     const { email, password } = req.body;
-       req.token = newTokenGenerator(email, password);
+       req.token = newTokenGenerator({ email, password });
        return next();
    };
 

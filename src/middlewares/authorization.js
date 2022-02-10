@@ -3,10 +3,13 @@ const { NewError } = require('../controllers/error/error');
 
 const authorization = (req, res, next) => {
     const token = req.headers.authorization;
-    if (!token) return NewError(401, 'token not found');
+    if (!token) return NewError(401, 'Token not found');
+    try {
         const verified = verifyToken(token);
-    if (!verified) return NewError(401, 'Expired or invalid token');
-        req.user = verified;
+                req.user = verified;
+        } catch (error) {
+        return NewError(401, 'Expired or invalid token');
+        }
         return next();
 };
 

@@ -3,13 +3,15 @@ require('dotenv').config();
 
 const segredo = process.env.SECRET;
 
-const newTokenGenerator = (user, secret = segredo) => {
-    const token = jwt.sign(user, secret);
+const OPTIONS = {};
+
+const newTokenGenerator = (user) => {
+    const token = jwt.sign(user, segredo, OPTIONS);
     return token;
 };
 
-const verifyToken = (token, secret = segredo) => {
-    const veriToken = jwt.verify(token, secret);
+const verifyToken = (token) => {
+    const veriToken = jwt.verify(token, segredo);
     return veriToken;
 };
 
