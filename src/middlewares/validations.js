@@ -72,12 +72,20 @@ const passwordLoginValidation = (req, res, next) => {
     console.log(req.body, 'pass');
     return next();
 };
-console.log(!'');
+
 const loginValidation = async (req, _res, next) => {
     const { email, password } = req.body;
     const user = await User.findOne({ where: { email } });
     if (!email || !password || !user) {
         return NewError(400, 'Invalid fields');
+    }
+    return next();
+};
+
+const nameCategoryValidation = (req, res, next) => {
+    const { name } = req.body;
+    if (!name || name === '') {
+        return NewError(400, '"name" is required');
     }
     return next();
 };
@@ -90,4 +98,5 @@ module.exports = {
     loginValidation,
     emailLoginValidation,
     passwordLoginValidation,
+    nameCategoryValidation,
 };

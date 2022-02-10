@@ -6,10 +6,11 @@ const { isNameValid,
         tokenGenerator } = require('../../middlewares/validations');
 const { addUser } = require('./newUser');
 const { getUsers } = require('./getUser');
+const { getUserById } = require('./getUserById');
+const { authorization } = require('../../middlewares/authorization');
 
 const router = express.Router({ mergeParams: true });
 
-router.get('/', rescue(getUsers));
 router.post('/',
  rescue(isNameValid),
  rescue(isEmailValid),
@@ -17,4 +18,7 @@ router.post('/',
  rescue(tokenGenerator),
  rescue(addUser));
 
-module.exports = router;
+ router.get('/', rescue(authorization), rescue(getUsers));
+ router.get('/:id', rescue(authorization), rescue(getUserById));
+
+ module.exports = router;
