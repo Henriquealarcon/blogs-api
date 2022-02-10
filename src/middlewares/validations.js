@@ -90,6 +90,29 @@ const nameCategoryValidation = (req, res, next) => {
     return next();
 };
 
+const titlePostValidation = (req, res, next) => {
+    const { title } = req.body;
+    if (!title) {
+        return NewError(400, '"title" is required');
+    }
+    return next();
+};
+
+const contentPostValidation = (req, res, next) => {
+    const { content } = req.body;
+    if (!content) {
+        return NewError(400, '"content" is required');
+    }
+    return next();
+};
+
+const categoryIdPostValidation = (req, res, next) => {
+    const { categoryId } = req.body;
+    if (!categoryId) {
+        return NewError(400, '"categoryId" is required');
+    }
+    return next();
+};
 module.exports = {
     isNameValid,
     isEmailValid,
@@ -99,4 +122,7 @@ module.exports = {
     emailLoginValidation,
     passwordLoginValidation,
     nameCategoryValidation,
+    titlePostValidation,
+    contentPostValidation,
+    categoryIdPostValidation,
 };
