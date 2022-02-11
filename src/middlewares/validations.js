@@ -51,6 +51,7 @@ const tokenGenerator = (req, res, next) => {
 
    const emailLoginValidation = (req, res, next) => {
     const { email } = req.body;
+    console.log(email);
     if (email === '') {
         NewError(400, '"email" is not allowed to be empty');
     }
