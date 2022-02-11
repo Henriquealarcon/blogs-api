@@ -1,6 +1,5 @@
-const Category = (sequelize, DataTypes) => {
-  const categoria = sequelize.define('Category', {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+module.exports = (sequelize, DataTypes) => {
+  const Category = sequelize.define('Category', {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -8,7 +7,5 @@ const Category = (sequelize, DataTypes) => {
     
   }, { timestamps: false, tableName: 'Categories' });
 
-  return categoria;
+  return Category;
 };
-
-module.exports = Category;

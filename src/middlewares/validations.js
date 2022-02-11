@@ -1,6 +1,7 @@
+const { Op } = require('sequelize');
 const ApiError = require('../controllers/error/error');
 const { newTokenGenerator } = require('../jwt/jwt');
-const { User } = require('../../models');
+const { User, Category } = require('../../models');
 
 const { NewError } = ApiError;
 
@@ -43,7 +44,6 @@ const isPasswordValid = async (req, res, next) => {
 };
 
 const tokenGenerator = (req, res, next) => {
-    console.log(req.body, 'body');
     const { email, password } = req.body;
        req.token = newTokenGenerator({ email, password });
        return next();
@@ -107,13 +107,22 @@ const contentPostValidation = (req, res, next) => {
 };
 
 const categoryIdPostValidation = (req, res, next) => {
-    const { categoryId } = req.body;
-    console.log(categoryId, 'aqui');
-    if (!categoryId) {
-        return NewError(400, '"categoryId" is required');
+    const { categoryIds } = req.body;
+    if (!categoryIds) {
+        return NewError(400, '"categoryIds" is required');
     }
     return next();
 };
+
+const categoryIdExists = async (req, res, next) => {
+    const { categoryIds } = req.body;
+    const iDexists = await Category.findAll({ where: { id: { [Op.in]: categoryIds } } });
+    if (iDexists.length !== categoryIds.length) {
+        return NewError(400, '"categoryIds" not found');
+    }
+    return next();
+};
+
 module.exports = {
     isNameValid,
     isEmailValid,
@@ -126,4 +135,5 @@ module.exports = {
     titlePostValidation,
     contentPostValidation,
     categoryIdPostValidation,
+    categoryIdExists,
 };
