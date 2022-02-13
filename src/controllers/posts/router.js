@@ -5,6 +5,7 @@ const { titlePostValidation,
         contentPostValidation,
         categoryIdPostValidation, 
         categoryIdExists } = require('../../middlewares/validations');
+const { getPostById } = require('./getPostById');
 const { getPosts } = require('./getPosts');
 const { newPost } = require('./newPost');
 
@@ -18,5 +19,6 @@ router.post('/',
  rescue(categoryIdExists),
  rescue(newPost));
 router.get('/', rescue(authorization), rescue(getPosts));
+router.get('/:id', rescue(authorization), rescue(getPostById));
 
 module.exports = router;
