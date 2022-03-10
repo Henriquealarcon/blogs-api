@@ -8,6 +8,7 @@ const { titlePostValidation,
 const { getPostById } = require('./getPostById');
 const { getPosts } = require('./getPosts');
 const { newPost } = require('./newPost');
+const { updatePostById } = require('./updatePostById');
 
 const router = express.Router({ mergeParams: true });
 
@@ -20,5 +21,9 @@ router.post('/',
  rescue(newPost));
 router.get('/', rescue(authorization), rescue(getPosts));
 router.get('/:id', rescue(authorization), rescue(getPostById));
+router.put('/:id', rescue(authorization),
+ rescue(titlePostValidation),
+rescue(contentPostValidation),
+ rescue(updatePostById));
 
 module.exports = router;
